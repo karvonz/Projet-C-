@@ -17,6 +17,8 @@ extern "C" {
         #include <libswscale/swscale.h>
 }
 
+//this is a test
+
 int main(int argc,char **argv)
 {
     QApplication app(argc,argv);
