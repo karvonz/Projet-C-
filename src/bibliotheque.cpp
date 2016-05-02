@@ -24,7 +24,7 @@ void Bibliotheque::addFilter(Filter *filter)
 {
     biblio.push_back(filter);
 }
-
+/*
 void Bibliotheque::addFilter(GreyFilter *filter)
 {
     biblio.push_back(filter);
@@ -56,6 +56,11 @@ void Bibliotheque::addFilter(FilterComplexUpSample *filter)
     biblio.push_back(filter);
 }
 
+void Bibliotheque::addFilter(FilterAdaptColor *filter)
+{
+    biblio.push_back(filter);
+}
+*/
 
 int Bibliotheque::nbrFilter()
 {
@@ -89,6 +94,3 @@ Filter* Bibliotheque::getFilter(int i)
         exit(0);
         }
 }
-
-
-

@@ -341,9 +341,9 @@ void PlayerInterface::frameCounterMethod(){
     int nbre      = decodedFrames;
 
     if( decodedFrames != 0 ){
-        double v0 = ((int)(100*((double)_avgDecoding  )/((double)decodedFrames)))/100.0;
-        double v1 = ((int)(100*((double)_avgProcessing)/((double)decodedFrames)))/100.0;
-        double v2 = ((int)(100*((double)_avgDrawing   )/((double)decodedFrames)))/100.0;
+        int v0 = ((int)(100*((double)_avgDecoding  )/((double)decodedFrames)))/100.0;
+        int v1 = ((int)(100*((double)_avgProcessing)/((double)decodedFrames)))/100.0;
+        int v2 = ((int)(100*((double)_avgDrawing   )/((double)decodedFrames)))/100.0;
 
         dTime ->setText( tr("Avg decoding   time : ") + QVariant(v0).toString()  + tr(" ms") );
         pTime ->setText( tr("Avg processing time : ") + QVariant(v1).toString()  + tr(" ms") );

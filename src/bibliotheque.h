@@ -8,6 +8,7 @@
 #include "filtersubsampling.h"
 #include "filtercomplexsubsampling.h"
 #include "filterupsample.h"
+#include "filteradaptcolor.h"
 #include <vector>
 
 #define MAX_FILTER 12
@@ -24,6 +25,7 @@ public:
     void addFilter(FilterComplexSubSampling *filter);
     void addFilter(FilterUpSample *filter);
     void addFilter(FilterComplexUpSample *filter);
+    void addFilter(FilterAdaptColor *filter);
     int nbrFilter();
     void presenteBiblio();
     QString getNameItem(int i);

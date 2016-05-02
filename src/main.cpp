@@ -28,6 +28,7 @@ int main(int argc,char **argv)
     biblio.addFilter(new FilterUpSample("UpSampling (poinçon)"));
     biblio.addFilter(new FilterComplexUpSample("UpSampling (linear)", 1));
     biblio.addFilter(new FilterComplexUpSample("UpSampling (cubic)", 2));
+    biblio.addFilter(new FilterAdaptColor("Adapt Color"));
 
 
     QApplication app(argc,argv);
