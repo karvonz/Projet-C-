@@ -26,9 +26,10 @@ int main(int argc,char **argv)
     biblio.addFilter(new FilterComplexSubSampling("SubSampling (linear)",1));
     biblio.addFilter(new FilterComplexSubSampling("SubSampling (cubic)",2));
     biblio.addFilter(new FilterUpSample("UpSampling (poinçon)"));
-    biblio.addFilter(new FilterComplexUpSample("UpSampling (linear)", 1));
-    biblio.addFilter(new FilterComplexUpSample("UpSampling (cubic)", 2));
+    biblio.addFilter(new FilterComplexUpSample("UpSampling (linear)"));
+    biblio.addFilter(new FilterComplexUpsampleCubic("UpSampling (cubic)"));
     biblio.addFilter(new FilterAdaptColor("Adapt Color"));
+    biblio.addFilter(new FilterMotionBlur("Motion Blur"));
 
 
     QApplication app(argc,argv);

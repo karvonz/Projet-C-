@@ -24,43 +24,7 @@ void Bibliotheque::addFilter(Filter *filter)
 {
     biblio.push_back(filter);
 }
-/*
-void Bibliotheque::addFilter(GreyFilter *filter)
-{
-    biblio.push_back(filter);
-}
 
-void Bibliotheque::addFilter(FilterCanal *filter)
-{
-    biblio.push_back(filter);
-}
-
-void Bibliotheque::addFilter(FilterSubSampling *filter)
-{
-    biblio.push_back(filter);
-
-}
-
-void Bibliotheque::addFilter(FilterComplexSubSampling *filter)
-{
-    biblio.push_back(filter);
-}
-
-void Bibliotheque::addFilter(FilterUpSample *filter)
-{
-    biblio.push_back(filter);
-}
-
-void Bibliotheque::addFilter(FilterComplexUpSample *filter)
-{
-    biblio.push_back(filter);
-}
-
-void Bibliotheque::addFilter(FilterAdaptColor *filter)
-{
-    biblio.push_back(filter);
-}
-*/
 
 int Bibliotheque::nbrFilter()
 {

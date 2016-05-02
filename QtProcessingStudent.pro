@@ -24,7 +24,10 @@ HEADERS += src/playerinterface.h \
     src/filtersubsampling.h \
     src/filtercomplexsubsampling.h \
     src/filterupsample.h \
-    src/filteradaptcolor.h
+    src/filteradaptcolor.h \
+    src/filtercomplexupsample.h \
+    src/filtercomplexupsamplecubic.h \
+    src/filtermotionblur.h
 SOURCES += src/playerinterface.cpp \
     src/openglwidget.cpp \
     src/main.cpp \
@@ -37,6 +40,9 @@ SOURCES += src/playerinterface.cpp \
     src/filtersubsampling.cpp \
     src/filtercomplexsubsampling.cpp \
     src/filterupsample.cpp \
-    src/filteradaptcolor.cpp
+    src/filteradaptcolor.cpp \
+    src/filtercomplexupsample.cpp \
+    src/filtercomplexupsamplecubic.cpp \
+    src/filtermotionblur.cpp
 RESOURCES +=
 FORMS +=

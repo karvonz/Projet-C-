@@ -12,15 +12,6 @@ public:
     void calculateFilter(FastImage *bufferOut, FastImage *bufferIn);
 };
 
-class FilterComplexUpSample : public Filter
-{
-public:
-    FilterComplexUpSample();
-    FilterComplexUpSample(QString _name, int _n);
-    virtual ~FilterComplexUpSample();
-    void calculateFilter(FastImage *bufferOut, FastImage *bufferIn);
-private:
-    int n;
-};
+
 
 #endif // FILTERUPSAMPLE_H

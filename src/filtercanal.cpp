@@ -41,6 +41,7 @@ void FilterCanal::calculateFilter(FastImage *bufferOut, FastImage *bufferIn)
             bufferOut->Red  (y, x,(constAddRed + factorInputRed*bufferIn->Red(y,x)) );
             bufferOut->Green(y, x, (constAddGreen + factorInputGreen*bufferIn->Green(y,x)) );
             bufferOut->Blue (y, x, (constAddBlue + factorInputBlue*bufferIn->Blue(y,x)) );
+
             //cout<<"currently calculating ["<<x<<";"<<y<<"] pixel"<<endl;
             //cout<<"valeur ini"<<bufferIn->Red(y,x)<<"valeur finale"<<bufferOut->Red(y,x)<<endl;
         }

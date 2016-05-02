@@ -9,6 +9,11 @@
 #include "filtercomplexsubsampling.h"
 #include "filterupsample.h"
 #include "filteradaptcolor.h"
+#include "filtercomplexupsample.h"
+#include "filtercomplexupsamplecubic.h"
+#include "filtermotionblur.h"
+
+
 #include <vector>
 
 #define MAX_FILTER 12
@@ -19,13 +24,6 @@ public:
     Bibliotheque();
     virtual ~Bibliotheque();
     void addFilter(Filter *filter);
-    void addFilter(GreyFilter *filter);
-    void addFilter(FilterCanal *filter);
-    void addFilter(FilterSubSampling *filter);
-    void addFilter(FilterComplexSubSampling *filter);
-    void addFilter(FilterUpSample *filter);
-    void addFilter(FilterComplexUpSample *filter);
-    void addFilter(FilterAdaptColor *filter);
     int nbrFilter();
     void presenteBiblio();
     QString getNameItem(int i);
