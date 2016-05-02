@@ -8,11 +8,8 @@
 #ifndef CVIDEO_H_
 #define CVIDEO_H_
 
-extern "C" {
-	#include <libavcodec/avcodec.h>
-	#include <libavformat/avformat.h>
-	#include "libswscale/swscale.h"
-}
+#include <opencv/cv.h>
+#include <opencv/highgui.h>
 
 #include "FImage.h"
 #include <QThread>
@@ -22,43 +19,30 @@ using namespace std;
 
 class CVideo : public QThread {
 private:
-	bool fileOpen;
-	bool fileFinish;
+    bool fileOpen;
+    bool fileFinish;
 
+    CvCapture* capture;
+    IplImage*  frame;
 
-	AVFormatContext *pFormatCtx;
-	AVFrame *pFrame;
-	AVFrame *pFrameRGB;
+    int videoH;
+    int videoW;
 
-	AVCodecContext *pCodecCtx;
-	AVCodec *pCodec;
-	AVPacket packet;
-
-    int videoStream;
-	int frameFinished;
-	int numBytes;
-	uint8_t *buffer;
-
-	int videoH;
-	int videoW;
-
-	int frameCnt;
-
-	bool framePrefetch;
+    int frameCnt;
 
 public:
-	QMutex mutex;
+    QMutex mutex;
 
     CVideo(const char *filename);
-	virtual ~CVideo();
-	void run();
-	int  frameNumber();
-	bool isFinished();
-	bool close();
+    virtual ~CVideo();
+    void run();
+    int  frameNumber();
+    bool isFinished();
+    bool close();
     bool open(const char *filename);
-	bool isOpen();
+    bool isOpen();
     bool decodeNextFrame();
-	void jumpFrame(int count);
+    void jumpFrame(int count);
     //void copyToFastImage();
 
     int getVideoWidth();

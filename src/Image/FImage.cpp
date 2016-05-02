@@ -10,7 +10,7 @@
 #include <mmintrin.h>
 #include <xmmintrin.h>
 #include <emmintrin.h>
-//#include <pmmintrin.h>
+#include <pmmintrin.h>
 
 #include "FImage.h"
 
@@ -54,14 +54,15 @@ int FastImage::width(){
 }
 
 void FastImage::resize(int _height, int _width){
+    //
+    // ON VERIFIE LE BESOIN DE REDIMENSIONNEMENT DE L'IMAGE
+    //
+    if( (_height == hauteur) && (largeur == _width)){
+        return;
+    }
+
     cout << "(II) FastImage::resize(" << largeur << "x" << hauteur << ") => (" << _width << "x" << _height << ")" << endl;
-        //
-        // ON VERIFIE LE BESOIN DE REDIMENSIONNEMENT DE L'IMAGE
-        //
-        if( (_height == hauteur) && (largeur == _width)){
-                return;
-        }
-        if( image != NULL ) _mm_free( image );
+    if( image != NULL ) _mm_free( image );
     largeur    = _width;
     hauteur    = _height;
     line_width = 4 * width();
@@ -118,12 +119,26 @@ void FastImage::Alpha(int y, int x, int v){
         image[4*x + line_width * y + 4] = Limit(v);
 }
 
-void FastImage::FastImageFill(AVFrame *pFrameRGB){
+void FastImage::FastImageFill(IplImage* frame){
     // LORSQUE L'ON RECUPERE UNE NOUVELLE IMAGE DU FLUX VIDEO, ON REPASSE LA TAILLE DE
     // L'IMAGE A LA TAILLE ALLOUEE EN MEMOIRE.
     //cout << "(II) Appel de la methode FastImage::FastImageFill(AVFrame *pFrameRGB)" << endl;
-    int size = line_width * height();
-    memcpy((void*)image, (void*)pFrameRGB->data[0], size * sizeof(unsigned char));
+
+    if( frame->nChannels == 4 ){
+        int size = line_width * height();
+        memcpy((void*)image, (void*)frame->imageData, size * sizeof(unsigned char));
+    }else{
+        int size = width() * height();
+        unsigned char* p = (unsigned char*)frame->imageData;
+        unsigned char* q = image;
+        while( size-- ){
+            *q++ = *p++;
+            *q++ = *p++;
+            *q++ = *p++;
+            *q++ = 0;
+        }
+    }
+
     //cout << "(II) Valeur du pixel (10x10)( = B=" << Blue(10,10) << " / G=" << Green(10,10) << " / R=" << Red(10,10) << endl;
 }
 

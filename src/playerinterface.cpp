@@ -2,12 +2,11 @@
 
 #define debug false
 
-//
-// CONSTRUCTEUR DE LA CLASSE EN CHARGE DE CREER L'INTERFACE GRAPHIQUE DU PLAYER
-//
-PlayerInterface::PlayerInterface()
+
+PlayerInterface::PlayerInterface(Bibliotheque & _biblio)
     : QWidget(0, Qt::Window)
 {
+    biblio=_biblio;
     //
     //	INITIALISATION DES POINTEURS SUR LES "IMAGES"
     //
@@ -42,8 +41,8 @@ PlayerInterface::PlayerInterface()
     //
     // DECLARATION DE TOUS LES PLUGINS DE TRAITEMENT VIDEO
     //
-    _listeFiltres->addItem( "None" );
-    _listeFiltres->addItem( "Inverse" );
+    for(int i=0; i<biblio.nbrFilter();i++)
+        _listeFiltres->addItem(biblio.getNameItem(i));
 
 
     _isPlaying = false;
@@ -236,37 +235,14 @@ void PlayerInterface::drawNextFrame()
 
 
     //QString value = _listeFiltres->currentText();
-
+    //
     // EN FONCTION DU CHOIX FAIT DANS LA LISTE ON FAIT UN TRUC ?!
-    if( _listeFiltres->currentIndex() == 0 ){
-
-        if( bufferOut->width() != bufferIn->width() || bufferOut->height() != bufferIn->height() ){
-            bufferOut->resize(bufferIn->height(), bufferIn->width());
-        }
-        bufferOut->FastCopyTo( bufferIn );
-
-                // SINON ON FAIT AUTRECHOSE...
-    }else{
-
-        // REDIMENTIONNEMENT SI NECESSAIRE DU BUFFER DE SORTIE...
-        if( bufferOut->width() != bufferIn->width() || bufferOut->height() != bufferIn->height() ){
-            bufferOut->resize(bufferIn->height(), bufferIn->width());
-        }
-
-        for(int y=0; y<bufferIn->height(); y++){
-                        for(int x=0; x<bufferIn->width(); x++){
-                                bufferOut->Red  (y, x, 255 - bufferIn->Red(y,x) );
-                                bufferOut->Green(y, x, 255 - bufferIn->Green(y,x) );
-                                bufferOut->Blue (y, x, 255 - bufferIn->Blue(y,x) );
-                        }
-        }
-
-    }
-
-
     //
+    biblio.getFilter(_listeFiltres->currentIndex())->calculateFilter(bufferOut,bufferIn);
+
+
+
     // ON AFFICHE LE TEMPS NECESSAIRE A LA GESTION DU FILTRAGE
-    //
     _avgProcessing += ( (double)(clock() - startC) ) / ( CLOCKS_PER_SEC ) * 1000.0;
     startC = clock(); // ON RELANCE LE COMPTEUR...
 
@@ -331,7 +307,6 @@ void PlayerInterface::openFile(QString* name)
     // ON CREE UN OBJET VIDEO ET ON PREFETCH LA PREMIERE IMAGE
     c = new CVideo( fileName.toStdString().c_str() );
     c->start();
-
     // ON ACTIVE LES BOUTONS EN CONSEQUENCE
     start->setEnabled( true );
     nextFrame->setEnabled( true );
@@ -352,7 +327,7 @@ void PlayerInterface::openFile(QString* name)
 //
 void PlayerInterface::changePosition(int newPosition)
 {
-    cout << "(II) Un changement de filtre a ete enregistre..." << endl;
+    cout << "(II) Un changement de filtre a ete enregistre... (" << newPosition << ")"  << endl;
     if( _isPlaying == true ) return;
     drawNextFrame();
 }

@@ -2,7 +2,7 @@
 
 OpenglWidget::OpenglWidget(/*const QString & filename, */QWidget* parent) : QGLWidget(QGLFormat(QGL::HasOverlay), parent)
 {
-    //cout << "Starting OpenglWidget::OpenglWidget(iQWidget* parent)" << endl;
+    cout << "Starting OpenglWidget::OpenglWidget(iQWidget* parent)" << endl;
     data   = new QImage(640, 480, QImage::Format_RGB32);
     gldata = QGLWidget::convertToGLFormat(*data);
     setMinimumSize(320, 240);
@@ -24,7 +24,7 @@ void OpenglWidget::CreateBuffer(int w, int h){
 
 #define GL_BGRA_EXT                       0x80E1
 void OpenglWidget::DrawImage(FastImage *pImage){
-	clef.lock();
+        clef.lock();
     //cout << "Starting OpenglWidget::DrawImage(FastImage *pImage)" << endl;
 
     /* On compare les dimensions de l'image au cas ou... */
@@ -37,7 +37,7 @@ void OpenglWidget::DrawImage(FastImage *pImage){
         setMaximumWidth (pImage->width());
         resize( data->size() );
         updateGeometry();
-        //cout << "(II) OpenglWidget::DrawImage : Adaptation au contenu (" << pImage->width() << "x" << pImage->height() << ")" << endl;
+        cout << "(II) OpenglWidget::DrawImage : Adaptation au contenu (" << pImage->width() << "x" << pImage->height() << ")" << endl;
     }
 
     // ON RECOPIE NOS DONNEES DANS LE BUFFER OPENGL
@@ -50,12 +50,12 @@ void OpenglWidget::DrawImage(FastImage *pImage){
     updateGL();
 
     //.this->start();
-	clef.unlock();
+        clef.unlock();
     }
 
 void OpenglWidget::run(){
-	//clef.lock();
-	//clef.unlock();
+        //clef.lock();
+        //clef.unlock();
 }
 void OpenglWidget::paintGL()
 {
@@ -66,7 +66,7 @@ void OpenglWidget::paintGL()
 
 void OpenglWidget::resizeGL(int w, int h)
 {
-    cout << "(II) Starting OpenglWidget::resizeGL(" << w << "x" << h << ")" << endl;
+    //cout << "(II) Starting OpenglWidget::resizeGL(" << w << "x" << h << ")" << endl;
     glViewport (0, 0, w, h);
     glMatrixMode (GL_PROJECTION);
     glLoadIdentity();

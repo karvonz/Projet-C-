@@ -10,13 +10,8 @@
 #include <iostream>
 using namespace std;
 
-
-
-extern "C" {
-    #include <libavcodec/avcodec.h>
-    #include <libavformat/avformat.h>
-    #include <libswscale/swscale.h>
-}
+#include <opencv/cv.h>
+#include <opencv/highgui.h>
 
 #ifndef FastImage_H_
 #define FastImage_H_
@@ -37,7 +32,7 @@ public:
 
         ~FastImage();
 
-        void FastImageFill( AVFrame *pFrameRGB );
+        void FastImageFill( IplImage* frame );
         void FastImageFill( unsigned char *p );
         void FastCopyTo( FastImage *p );
 

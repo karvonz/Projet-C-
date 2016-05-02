@@ -19,10 +19,13 @@
 #include <QShortcut>
 #include <QGroupBox>
 #include <QLabel>
+#include <QString>
 
-
+#include "bibliotheque.h"
+#include "filter.h"
 #include "./Image/CVideo.h"
 #include "openglwidget.h"
+//#include "greyfilter.h"
 
 #define POSITION_RESOLUTION 10000
 
@@ -89,8 +92,9 @@ class PlayerInterface : public QWidget
     FastImage *bufferOut;
 
 public:
-    PlayerInterface();
     ~PlayerInterface();
+
+    PlayerInterface(Bibliotheque &_biblio);
 
 public slots:
     //void playFile();
@@ -111,6 +115,8 @@ public slots:
 
     void stepOneFrame();
     void resetFilters();
+private:
+    Bibliotheque biblio;
 };
 
 #endif // PLAYERINTERFACE_H
