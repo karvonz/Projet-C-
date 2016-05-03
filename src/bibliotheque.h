@@ -12,6 +12,8 @@
 #include "filtercomplexupsample.h"
 #include "filtercomplexupsamplecubic.h"
 #include "filtermotionblur.h"
+#include "filterconv2.h"
+#include "filterconv3.h"
 
 
 #include <vector>

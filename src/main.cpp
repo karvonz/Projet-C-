@@ -30,7 +30,8 @@ int main(int argc,char **argv)
     biblio.addFilter(new FilterComplexUpsampleCubic("UpSampling (cubic)"));
     biblio.addFilter(new FilterAdaptColor("Adapt Color"));
     biblio.addFilter(new FilterMotionBlur("Motion Blur"));
-
+    biblio.addFilter(new FilterConv2("ContourDetection M0"));
+    biblio.addFilter(new FilterConv3("ContourDetection M1"));
 
     QApplication app(argc,argv);
     cout << "(II) int main(int argc,char **argv) :: Creation de l'interface graphique" << endl;
