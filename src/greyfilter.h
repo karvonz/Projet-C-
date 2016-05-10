@@ -3,7 +3,7 @@
 
 #include "filter.h"
 
-class GreyFilter : public Filter
+class GreyFilter : public virtual Filter
 {
 public:
     GreyFilter();

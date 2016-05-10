@@ -2,7 +2,7 @@
 #define FILTERSUBSAMPLING_H
 #include "filter.h"
 
-class FilterSubSampling: public Filter
+class FilterSubSampling: public virtual Filter
 {
 public:
     FilterSubSampling();

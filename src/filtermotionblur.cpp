@@ -14,6 +14,8 @@ FilterMotionBlur::FilterMotionBlur(QString _name) : Filter(_name)
 
 FilterMotionBlur::~FilterMotionBlur()
 {
+    delete buffer1;
+    delete buffer2;
 }
 
 void FilterMotionBlur::calculateFilter(FastImage *bufferOut, FastImage *bufferIn)

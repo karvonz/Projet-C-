@@ -3,7 +3,7 @@
 
 #include "filter.h"
 
-class FilterComplexUpSample : public Filter
+class FilterComplexUpSample : public virtual Filter
 {
 public:
     FilterComplexUpSample();
