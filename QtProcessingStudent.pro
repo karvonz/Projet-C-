@@ -37,7 +37,8 @@ HEADERS += src/playerinterface.h \
     src/filtercomplex1.h \
     src/filtercomplex2.h \
     src/filtercomplexe3.h \
-    src/filtercomplex4.h
+    src/filtercomplex4.h \
+    src/combobox.h
 SOURCES += src/playerinterface.cpp \
     src/openglwidget.cpp \
     src/main.cpp \
@@ -63,6 +64,7 @@ SOURCES += src/playerinterface.cpp \
     src/filtercomplex1.cpp \
     src/filtercomplex2.cpp \
     src/filtercomplexe3.cpp \
-    src/filtercomplex4.cpp
+    src/filtercomplex4.cpp \
+    src/combobox.cpp
 RESOURCES +=
 FORMS +=

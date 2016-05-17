@@ -26,6 +26,7 @@
 #include "./Image/CVideo.h"
 #include "openglwidget.h"
 //#include "greyfilter.h"
+#include "combobox.h"
 
 #define POSITION_RESOLUTION 10000
 
@@ -33,7 +34,10 @@
 class PlayerInterface : public QWidget
 {
     Q_OBJECT
-    QComboBox *_listeFiltres;
+    VComboBox *_listeFiltres;
+
+    vector<VComboBox*> listeFiltresVector;
+
 
     QPushButton *start;
     QPushButton *pause;
@@ -52,6 +56,8 @@ class PlayerInterface : public QWidget
     QLabel *dTime;
     QLabel *pTime;
     QLabel *sTime;
+    QHBoxLayout *layout = new QHBoxLayout;
+    QVBoxLayout *l5 = new QVBoxLayout;
 
     // VARIABLE UTILISEE AFIN DE MINIMISER LE NOMBRE DE MISES A JOUR DE
     // L'INTERFACE GRAPHIQUE.
@@ -86,6 +92,7 @@ class PlayerInterface : public QWidget
 
     QString fileName;
 
+    vector<FastImage *> buffer;
     FastImage *bufferIn;
     FastImage *bufferTmp1;
     FastImage *bufferTmp2;
@@ -93,10 +100,18 @@ class PlayerInterface : public QWidget
 
 public:
     ~PlayerInterface();
+    void addListFilter(VComboBox* l);
+    VComboBox* getListFilter(int i);
+    int nbrListFilter();
+    void manageList(int newPosition);
+    void deleteWidget(int i);
+void updateListeFiltres(int i);
+void calculBuffer(FastImage* bufferOut,FastImage* bufferIn);
 
     PlayerInterface(Bibliotheque &_biblio);
 
 public slots:
+    void changeCurrentFilter(VComboBox* listeFilter);
     //void playFile();
     void openFile(QString* name);
     //void updateInterface();
@@ -117,6 +132,8 @@ public slots:
     void resetFilters();
 private:
     Bibliotheque biblio;
+    int currentFilter;
+    int number_filter;
 };
 
 #endif // PLAYERINTERFACE_H
