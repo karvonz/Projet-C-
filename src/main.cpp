@@ -72,5 +72,4 @@ int main(int argc,char **argv)
     cout << "(II) int main(int argc,char **argv)  :: affichage de l'interface graphique" << endl;
     p.show();
     return app.exec();
-    //biblio.~Bibliotheque();
 }

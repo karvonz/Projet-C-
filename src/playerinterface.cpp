@@ -36,6 +36,7 @@ PlayerInterface::PlayerInterface(Bibliotheque & _biblio)
     // ON REALISE LA MISE EN FORME A L'ECRAN
     //
     QVBoxLayout *l4     = new QVBoxLayout;
+    QVBoxLayout *l5     = new QVBoxLayout;
     setLayout(layout);
 
 
@@ -68,7 +69,9 @@ PlayerInterface::PlayerInterface(Bibliotheque & _biblio)
     nextFrame->setEnabled( false );
     filterFrame->setEnabled( false );
 
-
+QGroupBox   *g1 = new QGroupBox(tr("Filter"));
+g1->setLayout(layerList);
+l5->addWidget(g1);
 
     QGroupBox   *g2 = new QGroupBox(tr("Action commands"));
     QVBoxLayout *ac = new QVBoxLayout;
@@ -108,7 +111,7 @@ PlayerInterface::PlayerInterface(Bibliotheque & _biblio)
     l4->addWidget(g3);
     l4->addWidget(g4);
     l4->addWidget(pp);
-    layout->addLayout(layerList);
+    layout->addLayout(l5);
 
     layout->addLayout(l4);
 

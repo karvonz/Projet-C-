@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_PlayerInterface_t {
-    QByteArrayData data[14];
-    char stringdata0[169];
+    QByteArrayData data[17];
+    char stringdata0[212];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -30,23 +30,27 @@ struct qt_meta_stringdata_PlayerInterface_t {
 static const qt_meta_stringdata_PlayerInterface_t qt_meta_stringdata_PlayerInterface = {
     {
 QT_MOC_LITERAL(0, 0, 15), // "PlayerInterface"
-QT_MOC_LITERAL(1, 16, 8), // "openFile"
-QT_MOC_LITERAL(2, 25, 0), // ""
-QT_MOC_LITERAL(3, 26, 8), // "QString*"
-QT_MOC_LITERAL(4, 35, 4), // "name"
-QT_MOC_LITERAL(5, 40, 14), // "changePosition"
-QT_MOC_LITERAL(6, 55, 11), // "newPosition"
-QT_MOC_LITERAL(7, 67, 13), // "drawNextFrame"
-QT_MOC_LITERAL(8, 81, 18), // "frameCounterMethod"
-QT_MOC_LITERAL(9, 100, 11), // "startButton"
-QT_MOC_LITERAL(10, 112, 14), // "switchToWebCam"
-QT_MOC_LITERAL(11, 127, 15), // "unlockFrameRate"
-QT_MOC_LITERAL(12, 143, 12), // "stepOneFrame"
-QT_MOC_LITERAL(13, 156, 12) // "resetFilters"
+QT_MOC_LITERAL(1, 16, 19), // "changeCurrentFilter"
+QT_MOC_LITERAL(2, 36, 0), // ""
+QT_MOC_LITERAL(3, 37, 10), // "VComboBox*"
+QT_MOC_LITERAL(4, 48, 11), // "listeFilter"
+QT_MOC_LITERAL(5, 60, 8), // "openFile"
+QT_MOC_LITERAL(6, 69, 8), // "QString*"
+QT_MOC_LITERAL(7, 78, 4), // "name"
+QT_MOC_LITERAL(8, 83, 14), // "changePosition"
+QT_MOC_LITERAL(9, 98, 11), // "newPosition"
+QT_MOC_LITERAL(10, 110, 13), // "drawNextFrame"
+QT_MOC_LITERAL(11, 124, 18), // "frameCounterMethod"
+QT_MOC_LITERAL(12, 143, 11), // "startButton"
+QT_MOC_LITERAL(13, 155, 14), // "switchToWebCam"
+QT_MOC_LITERAL(14, 170, 15), // "unlockFrameRate"
+QT_MOC_LITERAL(15, 186, 12), // "stepOneFrame"
+QT_MOC_LITERAL(16, 199, 12) // "resetFilters"
 
     },
-    "PlayerInterface\0openFile\0\0QString*\0"
-    "name\0changePosition\0newPosition\0"
+    "PlayerInterface\0changeCurrentFilter\0"
+    "\0VComboBox*\0listeFilter\0openFile\0"
+    "QString*\0name\0changePosition\0newPosition\0"
     "drawNextFrame\0frameCounterMethod\0"
     "startButton\0switchToWebCam\0unlockFrameRate\0"
     "stepOneFrame\0resetFilters"
@@ -59,7 +63,7 @@ static const uint qt_meta_data_PlayerInterface[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       9,   14, // methods
+      10,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -67,19 +71,21 @@ static const uint qt_meta_data_PlayerInterface[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,   59,    2, 0x0a /* Public */,
-       5,    1,   62,    2, 0x0a /* Public */,
-       7,    0,   65,    2, 0x0a /* Public */,
-       8,    0,   66,    2, 0x0a /* Public */,
-       9,    0,   67,    2, 0x0a /* Public */,
-      10,    0,   68,    2, 0x0a /* Public */,
-      11,    0,   69,    2, 0x0a /* Public */,
-      12,    0,   70,    2, 0x0a /* Public */,
-      13,    0,   71,    2, 0x0a /* Public */,
+       1,    1,   64,    2, 0x0a /* Public */,
+       5,    1,   67,    2, 0x0a /* Public */,
+       8,    1,   70,    2, 0x0a /* Public */,
+      10,    0,   73,    2, 0x0a /* Public */,
+      11,    0,   74,    2, 0x0a /* Public */,
+      12,    0,   75,    2, 0x0a /* Public */,
+      13,    0,   76,    2, 0x0a /* Public */,
+      14,    0,   77,    2, 0x0a /* Public */,
+      15,    0,   78,    2, 0x0a /* Public */,
+      16,    0,   79,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
-    QMetaType::Void, QMetaType::Int,    6,
+    QMetaType::Void, 0x80000000 | 6,    7,
+    QMetaType::Void, QMetaType::Int,    9,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -97,16 +103,28 @@ void PlayerInterface::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         PlayerInterface *_t = static_cast<PlayerInterface *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->openFile((*reinterpret_cast< QString*(*)>(_a[1]))); break;
-        case 1: _t->changePosition((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 2: _t->drawNextFrame(); break;
-        case 3: _t->frameCounterMethod(); break;
-        case 4: _t->startButton(); break;
-        case 5: _t->switchToWebCam(); break;
-        case 6: _t->unlockFrameRate(); break;
-        case 7: _t->stepOneFrame(); break;
-        case 8: _t->resetFilters(); break;
+        case 0: _t->changeCurrentFilter((*reinterpret_cast< VComboBox*(*)>(_a[1]))); break;
+        case 1: _t->openFile((*reinterpret_cast< QString*(*)>(_a[1]))); break;
+        case 2: _t->changePosition((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 3: _t->drawNextFrame(); break;
+        case 4: _t->frameCounterMethod(); break;
+        case 5: _t->startButton(); break;
+        case 6: _t->switchToWebCam(); break;
+        case 7: _t->unlockFrameRate(); break;
+        case 8: _t->stepOneFrame(); break;
+        case 9: _t->resetFilters(); break;
         default: ;
+        }
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        switch (_id) {
+        default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+        case 0:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< VComboBox* >(); break;
+            }
+            break;
         }
     }
 }
@@ -136,13 +154,13 @@ int PlayerInterface::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 9)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 10;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 9)
-            *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 9;
+        if (_id < 10)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 10;
     }
     return _id;
 }
