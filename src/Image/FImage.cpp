@@ -178,6 +178,7 @@ void FastImage::FastCopyTo( FastImage *f ){
     //        // P+2 => Red
     //    }
     //}
+
     memcpy((void*)image, (void*)f->image, size * sizeof(unsigned char));
     //cout << "(II) Valeur du pixel (10x10)( = B=" << Blue(10,10) << " / G=" << Green(10,10) << " / R=" << Red(10,10) << endl;
 }

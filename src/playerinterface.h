@@ -57,7 +57,7 @@ class PlayerInterface : public QWidget
     QLabel *pTime;
     QLabel *sTime;
     QHBoxLayout *layout = new QHBoxLayout;
-    QVBoxLayout *l5 = new QVBoxLayout;
+    QVBoxLayout *layerList = new QVBoxLayout;
 
     // VARIABLE UTILISEE AFIN DE MINIMISER LE NOMBRE DE MISES A JOUR DE
     // L'INTERFACE GRAPHIQUE.
@@ -105,8 +105,7 @@ public:
     int nbrListFilter();
     void manageList(int newPosition);
     void deleteWidget(int i);
-void updateListeFiltres(int i);
-void calculBuffer(FastImage* bufferOut,FastImage* bufferIn);
+    void calculBuffer(FastImage* bufferOut,FastImage* bufferIn);
 
     PlayerInterface(Bibliotheque &_biblio);
 

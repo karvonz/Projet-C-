@@ -16,8 +16,6 @@ PlayerInterface::PlayerInterface(Bibliotheque & _biblio)
     bufferTmp1 = NULL;
     bufferTmp2 = NULL;
 
-   // buffer.push_back(new FastImage(bufferTmp2));
-
 
     frameAverage = 0;
     seconds      = 0;
@@ -33,7 +31,6 @@ PlayerInterface::PlayerInterface(Bibliotheque & _biblio)
     //	CREATION DES OBJETS VISUELS (INTERFACE GRAPHIQUE)
     //
     _videoWidget   = new OpenglWidget(this);
-   // _listeFiltres  = new QComboBox(this);
 
     //
     // ON REALISE LA MISE EN FORME A L'ECRAN
@@ -42,9 +39,13 @@ PlayerInterface::PlayerInterface(Bibliotheque & _biblio)
     setLayout(layout);
 
 
-
+    //Initialisation des vectors
     listeFiltresVector.clear();
     addListFilter(new VComboBox());
+    buffer.clear();
+
+    //Ajout de la premiere liste
+    layerList->addWidget(listeFiltresVector[0]);
 
     _isPlaying = false;
 
@@ -67,11 +68,7 @@ PlayerInterface::PlayerInterface(Bibliotheque & _biblio)
     nextFrame->setEnabled( false );
     filterFrame->setEnabled( false );
 
-    // ON CREE UN REGROUPEMENT POUR L'ENSEMBLE DES ELEMENTS LIES AU FILTRAGE
-    //QGroupBox   *g1 = new QGroupBox(tr("Filter processing"));
-    //QVBoxLayout *fp = new QVBoxLayout;
-    l5->addWidget(listeFiltresVector[0]);
-    //g1->setLayout(fp);
+
 
     QGroupBox   *g2 = new QGroupBox(tr("Action commands"));
     QVBoxLayout *ac = new QVBoxLayout;
@@ -107,12 +104,11 @@ PlayerInterface::PlayerInterface(Bibliotheque & _biblio)
     pt->addWidget( sTime );
     pp->setLayout(pt);
 
-    //l5->addWidget(g1);
     l4->addWidget(g2);
     l4->addWidget(g3);
     l4->addWidget(g4);
     l4->addWidget(pp);
-    layout->addLayout(l5);
+    layout->addLayout(layerList);
 
     layout->addLayout(l4);
 
@@ -164,7 +160,6 @@ PlayerInterface::PlayerInterface(Bibliotheque & _biblio)
     //
     new QShortcut(Qt::CTRL + Qt::Key_Q, this, SLOT(close()));
     new QShortcut(Qt::Key_Space,        this, SLOT(startButton()));
-    new QShortcut(Qt::Key_Escape,       this, SLOT(resetFilters()));
 }
 
 
@@ -184,11 +179,14 @@ PlayerInterface::~PlayerInterface()
 
 void PlayerInterface::addListFilter(VComboBox *l)
 {
+    //on connecte le passage de la souris sur la liste
     connect(l,SIGNAL(mouseEntered(VComboBox*)), this, SLOT(changeCurrentFilter(VComboBox*)));
 
+    //on rajoute tous les filtres entrés au début
     for(int i=0; i<biblio.nbrFilter();i++)
         l->addItem(biblio.getNameItem(i));
 
+    //ajout au vector
     listeFiltresVector.push_back(l);
 }
 
@@ -203,7 +201,7 @@ VComboBox *PlayerInterface::getListFilter(int i)
     else{
         perror("probleme getListFilter tentative d'acces filtre hors du vector");
         exit(0);
-        }
+    }
 }
 
 
@@ -214,34 +212,27 @@ int PlayerInterface::nbrListFilter()
 
 void PlayerInterface::manageList(int newPosition)
 {
-   /* if( newPosition == 0)
+    if( newPosition == 0)
     {
         if (currentFilter < (listeFiltresVector.size()-1) && (listeFiltresVector.size()-1) != 0 )
             deleteWidget(currentFilter);
     }
-    else*/ if(currentFilter==(listeFiltresVector.size()-1))
+    else if(currentFilter==(listeFiltresVector.size()-1))
     {
-        addListFilter(new VComboBox());
-       // QGroupBox   *g1 = new QGroupBox(tr("Filter processing"));
-        //QVBoxLayout *fp = new QVBoxLayout;
-      //  fp->addWidget(listeFiltresVector[++currentFilter]);
-        //g1->setLayout(fp);
-
-        //l5->addWidget(g1);
-        l5->addWidget(listeFiltresVector[++currentFilter]);
-
-        layout->addLayout(l5);
+        buffer.push_back(new FastImage(bufferTmp1)); //on ajoute un buffer.
+        addListFilter(new VComboBox()); //nouvelle liste de filtre
+        layerList->addWidget(listeFiltresVector[++currentFilter]); //on ajoute la liste au layer layerList
         connect(listeFiltresVector[currentFilter],  SIGNAL(activated(int)),  this, SLOT(changePosition(int)));
 
-        //on ajoute un buffer.
-        buffer.push_back(new FastImage(bufferTmp1));
+
     }
 
 
 }
 
-void PlayerInterface::changeCurrentFilter(VComboBox *listeFilter)
+void PlayerInterface::changeCurrentFilter(VComboBox *listeFilter) //slot pour savoir sur quel filtre est la souris
 {
+    //recherche du filtre dans le vector grâce a son adresse
     bool t=true;
     for(int i=0;(i<listeFiltresVector.size() && t);i++)
     {
@@ -250,7 +241,7 @@ void PlayerInterface::changeCurrentFilter(VComboBox *listeFilter)
             t=false;
         }
     }
-    cout<<currentFilter<<endl;
+    //cout<<currentFilter<<endl;
 }
 
 
@@ -319,8 +310,8 @@ void PlayerInterface::drawNextFrame()
     // EN FONCTION DU CHOIX FAIT DANS LA LISTE ON FAIT UN TRUC ?!
     //
 
-
-     calculBuffer(bufferOut,bufferIn);
+    //Appel a la fonction de calcul du buffer de sortie
+    calculBuffer(bufferOut,bufferIn);
 
 
 
@@ -421,49 +412,32 @@ void PlayerInterface::changePosition(int newPosition)
 
 }
 
-void PlayerInterface::deleteWidget(int i)
+void PlayerInterface::deleteWidget(int i) //supprime la liste i du layerList + dernier buffer
 {
-cout<<listeFiltresVector.size()<<"before"<<endl;
-
-    QLayoutItem *item;
-    item = l5->takeAt(i);
-    delete item->widget();
-    delete item;
-
-//deconnecter les signaux ?
-
-    //delete listeFiltresVector[i];
-   // delete l5->takeAt(i);
-//updateListeFiltres(i);
-   // listeFiltresVector.remove(i); //listeFiltresVector.begin()
-
-cout<<listeFiltresVector.size()<<"after"<<endl;
-
-    //
-
-// layout->addLayout(l5);
+    listeFiltresVector[i]->deleteLater();
+    listeFiltresVector.erase(listeFiltresVector.begin()+i);
+    buffer.pop_back();
 }
 
-void PlayerInterface::updateListeFiltres(int i)
+
+void PlayerInterface::calculBuffer(FastImage *bufferOut, FastImage *bufferIn) //Calcul l'image de sortie en fcontion des différents filtres en cours
 {
-    for (int j =i; j<listeFiltresVector.size()-1;j++){
-        listeFiltresVector[j]=listeFiltresVector[j+1];
+    if (buffer.size()==0){ //si un seul filtre
+        biblio.getFilter(listeFiltresVector[0]->currentIndex())->calculateFilter(bufferOut,bufferIn);
     }
-}
-
-void PlayerInterface::calculBuffer(FastImage *bufferOut, FastImage *bufferIn)
-{
-    if (buffer.size()==0)
-      biblio.getFilter(listeFiltresVector[0]->currentIndex())->calculateFilter(bufferOut,bufferIn);
     else
     {
-      biblio.getFilter(listeFiltresVector[1]->currentIndex())->calculateFilter(buffer[0],bufferIn);
-      for(int j=2;j<buffer.size();j++)
-          biblio.getFilter(listeFiltresVector[j]->currentIndex())->calculateFilter(buffer[j],buffer[j-1]);
-      bufferOut = buffer[buffer.size()-1];
-      //for(int y=0; y<bufferIn->height(); y++){
-       //   for(int x=0; x<bufferIn->width(); x++){
+        //cascadage des filtres
+        biblio.getFilter(listeFiltresVector[0]->currentIndex())->calculateFilter(buffer[0],bufferIn);
+        for(int j=1;j<buffer.size();j++){
+            biblio.getFilter(listeFiltresVector[j]->currentIndex())->calculateFilter(buffer[j],buffer[j-1]);}
 
+        // REDIMENTIONNEMENT SI NECESSAIRE DU BUFFER DE SORTIE puis recopie du dernier buffer dans bufferOut
+        if( bufferOut->width() != buffer[buffer.size()-1]->width() || bufferOut->height() != buffer[buffer.size()-1]->height() ){
+            bufferOut->resize(buffer[buffer.size()-1]->height(), buffer[buffer.size()-1]->width());
+        }
+
+        bufferOut->FastCopyTo(buffer[buffer.size()-1]);
     }
 }
 
@@ -562,9 +536,7 @@ void PlayerInterface::stepOneFrame(){
     cout << "(II) FIN PlayerInterface::stepOneFrame()" << endl;
 }
 
-//
-// METHODE INVOQUEE LORSQUE L'UTILISATEUR DEMANDE L'AVANCEMENT MANUEL D'UNE IMAGE
-//
 void PlayerInterface::resetFilters(){
     _listeFiltres->setCurrentIndex(0);
 }
+
