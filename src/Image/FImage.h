@@ -8,14 +8,19 @@
  */
 
 #include <iostream>
+
+
 using namespace std;
 
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
 
+//#include "opencv2/imgproc/imgproc.hpp"
+//#include "opencv2/highgui/highgui.hpp"
+
 #ifndef FastImage_H_
 #define FastImage_H_
-
+using namespace cv;
 class FastImage{
 private:
         int taille;

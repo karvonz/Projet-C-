@@ -89,6 +89,8 @@ class PlayerInterface : public QWidget
 
     bool _isPlaying;
     CVideo *c;
+    VideoCapture cap;
+    Mat tempcap;
 
     QString fileName;
 

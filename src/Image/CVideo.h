@@ -10,10 +10,17 @@
 
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
+#include "opencv2/imgproc/imgproc.hpp"
+//#include "opencv2/highgui/highgui.hpp"
 
+
+//#include "opencv2/imgproc/imgproc.hpp"
+//#include "opencv2/highgui/highgui.hpp"
 #include "FImage.h"
 #include <QThread>
 #include <QMutex>
+using namespace cv;
+
 using namespace std;
 
 

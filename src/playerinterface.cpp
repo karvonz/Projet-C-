@@ -50,9 +50,7 @@ PlayerInterface::PlayerInterface(Bibliotheque & _biblio)
 
     _isPlaying = false;
 
-    //
-    // LE MODE WEBCAM EST DESACTIVE DANS CETTE VERSION DE L'OUTIL
-    //
+
     isWebCam         = false;
 
 
@@ -64,7 +62,7 @@ PlayerInterface::PlayerInterface(Bibliotheque & _biblio)
     pause       = new QPushButton( "Switch to camera", this );
     filterFrame = new QPushButton( "Limit 24fps", this );
 
-    pause->setEnabled( false );
+    pause->setEnabled( true );
     start->setEnabled( false );
     nextFrame->setEnabled( false );
     filterFrame->setEnabled( false );
@@ -149,7 +147,7 @@ l5->addWidget(g1);
     //
     connect(poller,         SIGNAL(timeout()),       this, SLOT(updateInterface())  );
     connect(start,          SIGNAL(clicked()),       this, SLOT(startButton())      );
-    connect(pause,          SIGNAL(clicked()),       this, SLOT(openFile())         );
+    connect(pause,          SIGNAL(clicked()),       this, SLOT(switchToWebCam())         );
     connect(nextFrame,      SIGNAL(clicked()),       this, SLOT(stepOneFrame())     );
     connect(filterFrame,    SIGNAL(clicked()),       this, SLOT(unlockFrameRate())  );
     connect(listeFiltresVector[0],  SIGNAL(activated(int)),  this, SLOT(changePosition(int)));
@@ -284,13 +282,32 @@ void PlayerInterface::drawNextFrame()
             bufferTmp2 = new FastImage( bufferIn );
         }
 
-        c->getNextVideoFrame( bufferIn );
+        if (isWebCam){
+            Mat tempcapbis;
+            cap >> tempcapbis; //todo tempcap in bufferIn
+
+        /*    if( bufferIn->width() != _inWidth || bufferIn->height() != _inHeight){
+                _inWidth  = bufferIn->width();
+                _inHeight = bufferIn->height();
+                inWidth ->setText( tr("Video width  : ") + QVariant(_inWidth).toString()  + tr(" pixel(s)") );
+                inHeight->setText( tr("Video height : ") + QVariant(_inHeight).toString() + tr(" pixel(s)") );
+         */
+           _inWidth= tempcapbis.cols;
+           _inHeight = tempcapbis.rows;
+           bufferIn->resize(_inHeight,_inWidth);
+
+            IplImage tempiplbis= IplImage(tempcapbis);
+            //IplImage* tempipl = cvCloneImage(&(IplImage) tempcapbis);
+            bufferIn->FastImageFill( &tempiplbis);
+        }
+        else
+            c->getNextVideoFrame( bufferIn );
 
         //
         // ON GERE LE CAS OU LA VIDEO VIENT DE SE TERMINER... ON N'A PLUS RIEN A FAIRE
         // MAINTENANT !
         //
-        if( c->isFinished() == true ){
+        if( c->isFinished() == true && !isWebCam ){
             poller->stop();
             filterFrame->setEnabled( false );
             start->setEnabled( false );
@@ -519,9 +536,15 @@ void PlayerInterface::switchToWebCam(){
     isWebCam = ! isWebCam;
     if( isWebCam )
         pause       = new QPushButton( "Switch to file", this );
+
     else
         pause       = new QPushButton( "Switch to camera", this );
-    cout << "(II) Changement du comportement (2) : " << isWebCam << endl;
+
+   cap.open(0); // open the default camera
+    if(!cap.isOpened())  // check if we succeeded
+         cout << "erreur ouverture webcam "<< endl;
+
+        cout << "(II) Changement du comportement (2) : " << isWebCam << endl;
 }
 
 
